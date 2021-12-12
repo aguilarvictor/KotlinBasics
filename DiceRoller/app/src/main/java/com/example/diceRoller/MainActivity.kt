@@ -1,10 +1,11 @@
-package com.example.myapplication
+package com.example.diceRoller
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
+import com.example.diceRoller.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,19 +14,35 @@ class MainActivity : AppCompatActivity() {
 
         val rollButton: Button = findViewById(R.id.button)
         rollButton.setOnClickListener { rollDice() }
+
+        rollDice()
     }
 
     /*
     * Function rollDice
     * Instances a new object of Dice type, defining the number of sides
     * Roll method is called from Dice class
-    * Value is assigned to TextView
+    * Value is displayed with the related image resource
     */
     private fun rollDice() {
         val diceOne = Dice(6)
         val diceRoll = diceOne.roll()
-        val resultTextView: TextView = findViewById(R.id.textView)
-        resultTextView.text = diceRoll.toString()
+
+        /* Find the image view in the layout */
+        val diceImage: ImageView = findViewById(R.id.imageView)
+
+        /* Assign resource reference to variable to call setImageResource method only once */
+        val drawableResource = when (diceRoll) {
+            1 -> R.drawable.dice_1
+            2 -> R.drawable.dice_2
+            3 -> R.drawable.dice_3
+            4 -> R.drawable.dice_4
+            5 -> R.drawable.dice_5
+            else -> R.drawable.dice_6
+        }
+        diceImage.setImageResource(drawableResource)
+        /* Add the content description for screen readers */
+        diceImage.contentDescription = diceRoll.toString()
     }
 }
 
