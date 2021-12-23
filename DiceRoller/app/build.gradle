@@ -7,13 +7,15 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId 'com.example.diceRoller'
+        applicationId "com.example.diceroller"
         minSdk 21
         targetSdk 31
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+
     }
 
     buildTypes {
