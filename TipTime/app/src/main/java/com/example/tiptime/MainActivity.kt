@@ -1,10 +1,14 @@
 package com.example.tiptime
 
+import android.content.Context
 import android.icu.text.NumberFormat
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.example.tiptime.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -18,16 +22,22 @@ class MainActivity : AppCompatActivity() {
 
         /* Set a click listener on the Calculate button and call CalculateTip fun */
         binding.calculateButton.setOnClickListener { calculateTip() }
+        binding.costOfServiceEditText.setOnKeyListener { view, keyCode, _ ->
+            handleKeyEvent(
+                view,
+                keyCode
+            )
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun calculateTip() {
         /* 1. Get the cost of service. Convert value from string to double */
-        val stringInTextField = binding.costOfService.text.toString()
+        val stringInTextField = binding.costOfServiceEditText.text.toString()
         val cost = stringInTextField.toDoubleOrNull()
 
         if (cost == null) {
-            binding.tipResult.text = "Enter a valid service cost."
+            binding.tipResult.text = getString(R.string.invalid_value)
             return
         }
 
@@ -51,5 +61,16 @@ class MainActivity : AppCompatActivity() {
 
         /* 6. Display amount */
         binding.tipResult.text = getString(R.string.tip_amount, formattedTip)
+    }
+
+    private fun handleKeyEvent(view: View, keyCode: Int): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+            // Hide the keyboard
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+            return true
+        }
+        return false
     }
 }
