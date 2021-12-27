@@ -3,4 +3,6 @@
     <dimen name="text_size">20sp</dimen>
     <dimen name="small_pading">8dp</dimen>
     <dimen name="layout_margin">16dp</dimen>
+    <dimen name="layout_padding">16dp</dimen>
+    <dimen name="line_spacing">1.2</dimen>
 </resources>

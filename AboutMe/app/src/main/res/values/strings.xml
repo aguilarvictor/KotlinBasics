@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">About Me</string>
-    <string name="name">Victor Aguilar</string>
+    <string name="name">Dietrich Bonhoeffer</string>
     <string name="yellow_star">Yello star</string>
+    <string name="bio">Dietrich Bonhoeffer was a German pastor and theologian known for his opposition to National Socialism. His ties to the July 20, 1944, conspiracy to overthrow the Nazi regime led to his execution in 1945. His theological writings are regarded as classics throughout the Christian world. Born in Breslau on February 4, 1906, Dietrich Bonhoeffer was the sixth child of Karl and Paula Bonhoeffer. After completing his theological studies, he served a German-speaking congregation in Barcelona, Spain, from 1928–1930. He studied at Union Theological Seminary in New York from 1930–1931. During that time he attended Abyssinian Baptist Church in Harlem and became deeply interested in the issue of racial injustice. He also became active in the Protestant ecumenical movement, making international contacts that after 1933 would prove crucial for the Confessing Church and for his time in the German resistance.</string>
+    <string name="what_is_your_nickname">What is your nickname?</string>
+    <string name="done">Done</string>
 </resources>
