@@ -2,7 +2,10 @@ package com.globomed.learn
 
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.ContentValues
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_add.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -10,10 +13,14 @@ import java.util.*
 class AddEmployeeActivity : Activity() {
 
     private val myCalendar = Calendar.getInstance()
+    private lateinit var databaseHelper : DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
+
+        /* Initialize the databaseHelper before using it */
+        databaseHelper = DatabaseHelper(this)
 
         // on clicking ok on the calender dialog
         val date = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
@@ -64,7 +71,22 @@ class AddEmployeeActivity : Activity() {
             val name = etEmpName?.text.toString()
             val designation = etDesignation?.text.toString()
             val dob = myCalendar.timeInMillis
+
+            val db = databaseHelper.writableDatabase
+
+            val values = ContentValues()
+            values.put(GloboMedDbContract.EmployeeEntry.COLUMN_NAME, name)
+            values.put(GloboMedDbContract.EmployeeEntry.COLUMN_DESIGNATION, designation)
+            values.put(GloboMedDbContract.EmployeeEntry.COLUMN_DOB, dob)
+
+            val result = db.insert(GloboMedDbContract.EmployeeEntry.TABLE_NAME, null, values)
+
+            setResult(RESULT_OK, Intent())
+
+            Toast.makeText(applicationContext,"Employee Added", Toast.LENGTH_SHORT).show()
         }
+
+        finish()
     }
 
     private fun setUpCalender(date: DatePickerDialog.OnDateSetListener) {
