@@ -30,7 +30,8 @@ class EmployeeListAdapter(
 
 	override fun onBindViewHolder(holder: EmployeeViewHolder, position: Int) {
 		val employee = employeeList[position]
-		holder.setData(employee.name, employee.designation)
+		holder.setData(employee.name, employee.designation, position)
+		holder.setListener()
 	}
 
 	fun setEmployees(employees: ArrayList<Employee>) {
@@ -38,16 +39,28 @@ class EmployeeListAdapter(
 		notifyDataSetChanged()
 	}
 
-	class EmployeeViewHolder(itemView: View)  : RecyclerView.ViewHolder(itemView) {
+	inner class EmployeeViewHolder(itemView: View)  : RecyclerView.ViewHolder(itemView) {
 
+		var pos = 0
 		/*
 		* Function to pass detail data of employee:
 		* Name, Designation, to the itemViews:
 		* tvEmpName, tvEmpDesignation
 		*/
-		fun setData(name: String, designation: String) {
+		fun setData(name: String, designation: String, pos: Int) {
 			itemView.tvEmpName.text = name
 			itemView.tvEmpDesignation.text = designation
+			this.pos = pos
+		}
+
+		/*
+		* Function to fetch data of a selected entry
+		*/
+		fun setListener() {
+			itemView.setOnClickListener {
+				val databaseHelper = DatabaseHelper(context)
+				val employee= DataManager.fetchEmployee(databaseHelper, employeeList[pos].id)
+			}
 		}
 	}
 }

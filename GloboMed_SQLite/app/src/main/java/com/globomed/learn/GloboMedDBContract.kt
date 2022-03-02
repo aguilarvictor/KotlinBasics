@@ -18,8 +18,8 @@ object GloboMedDbContract {
         const val COLUMN_DESIGNATION = "designation"
 
         /*
-* Query to create table according to Contract class.
-*/
+        * Query to create table according to Contract class.
+        */
         const val SQL_CREATE_ENTRIES: String =
             "CREATE TABLE ${TABLE_NAME} (" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
