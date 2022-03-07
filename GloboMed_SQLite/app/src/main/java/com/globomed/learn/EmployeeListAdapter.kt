@@ -58,8 +58,9 @@ class EmployeeListAdapter(
 		*/
 		fun setListener() {
 			itemView.setOnClickListener {
-				val databaseHelper = DatabaseHelper(context)
-				val employee= DataManager.fetchEmployee(databaseHelper, employeeList[pos].id)
+				val intent = Intent(context, UpdateEmployeeActivity::class.java)
+				intent.putExtra(GloboMedDbContract.EmployeeEntry.COLUMN_ID, employeeList[pos].id)
+				(context as Activity).startActivityForResult(intent,2)
 			}
 		}
 	}

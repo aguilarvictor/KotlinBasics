@@ -1,8 +1,13 @@
 package com.globomed.learn
 
+import android.content.ContentValues
 import com.globomed.learn.GloboMedDbContract.EmployeeEntry
 
 object DataManager {
+
+    /*
+    * Function to get all employee data from database
+    */
     fun fetchAllEmployees(databaseHelper: DatabaseHelper): ArrayList<Employee>{
         val employees = ArrayList<Employee>()
 
@@ -62,6 +67,9 @@ object DataManager {
         return employees
     }
 
+    /*
+    * Function to get data from a single entry given the employee ID
+    */
     fun fetchEmployee(databaseHelper: DatabaseHelper, empId: String) : Employee?{
         /* Open database connection */
         val db  = databaseHelper.readableDatabase
@@ -108,4 +116,42 @@ object DataManager {
 
         return employee
     }
+
+    /*
+    * Function to update data from a single entry given the ID
+    */
+    fun updateEmployee(databaseHelper: DatabaseHelper, employee: Employee){
+        /* Open database connection to write */
+        val db = databaseHelper.writableDatabase
+
+        /* Create the rest of values */
+        val values = ContentValues()
+        values.put(EmployeeEntry.COLUMN_NAME, employee.name)
+        values.put(EmployeeEntry.COLUMN_DESIGNATION, employee.designation)
+        values.put(EmployeeEntry.COLUMN_DOB, employee.dob)
+
+        /* Specify the selection and selectionArgs for the filter query */
+        val selection = EmployeeEntry.COLUMN_ID + " LIKE ? "
+        val selectionArgs = arrayOf(employee.id)
+
+        db.update(EmployeeEntry.TABLE_NAME, values, selection, selectionArgs)
+    }
+
+    /*
+    * Function to delete single record from table
+    * Return number of rows affected by operation
+    */
+    fun deleteEmployee(databaseHelper: DatabaseHelper, empId: String): Int{
+        val db = databaseHelper.writableDatabase
+
+        /* Specify the selection and selectionArgs for the filter query */
+        val selection = EmployeeEntry.COLUMN_ID + " LIKE ? "
+        val selectionArgs = arrayOf(empId)
+
+        return db.delete(EmployeeEntry.TABLE_NAME, selection, selectionArgs)
+    }
+    /*
+    * Function to delete all records from table
+    */
+
 }

@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddEmployeeActivity" />
+        <activity android:name=".UpdateEmployeeActivity" />
     </application>
 
 </manifest>
