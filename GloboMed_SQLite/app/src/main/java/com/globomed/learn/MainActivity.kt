@@ -45,22 +45,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_item, menu)
+        menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId){
-            R.id.action_delete -> {
+            R.id.action_deleteAll -> {
                 /* Alert box to confirm data deletion */
                 val builder = AlertDialog.Builder(this)
                 builder.setMessage(R.string.confirm_sure)
                     .setPositiveButton(R.string.yes){ dialog, id ->
-                        val result = DataManager.deleteEmployee(databaseHelper, empId.toString())
+                        val result = DataManager.deleteAllEmployee(databaseHelper)
                         Toast.makeText(applicationContext, "$result record deleted", Toast.LENGTH_SHORT).show()
 
                         setResult(Activity.RESULT_OK, Intent())
-                        finish()
                     }
                     .setNegativeButton(R.string.no){ dialog, id ->
                         dialog.dismiss()
